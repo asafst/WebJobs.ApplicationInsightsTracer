@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+      Version 0.0.2 changes:
+      - Added operation handling
+
+      Version 0.0.1 changes:
+      - Initial release
+    </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>WebJobSDK ApplicationInsights</tags>
+  </metadata>
+</package>
