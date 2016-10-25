@@ -1,5 +1,6 @@
 ﻿namespace WebJobs.ApplicationInsightsTracer
 {
+    using Microsoft.ApplicationInsights.Extensibility;
     using System;
     using Tracing;
 
@@ -10,13 +11,8 @@
     [AttributeUsage(AttributeTargets.Parameter)]
     public class AITracerConfigurationAttribute : Attribute
     {
-        public AITracerConfigurationAttribute(string instrumentationKey)
-        {
-            InstrumentationKey = instrumentationKey;
-        }
-
         public string InstrumentationKey { get; set; }
 
-        public bool CreateNewTelemetryConfiguration { get; set; } 
+        public TelemetryConfiguration AITelemtryConfiguration { get; set; }
     }
 }

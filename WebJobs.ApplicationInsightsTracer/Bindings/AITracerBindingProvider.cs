@@ -37,15 +37,19 @@
                 return Task.FromResult<IBinding>(null);
             }
 
-            // if the attribute exists, update the ikey
+            // if the attribute exists, use the configuration from it
             AITracerConfigurationAttribute aiTracerConfigurationAttribute = parameter.GetCustomAttribute<AITracerConfigurationAttribute>(inherit: false);
             if (aiTracerConfigurationAttribute != null)
             {
-                if (aiTracerConfigurationAttribute.CreateNewTelemetryConfiguration)
+                if (aiTracerConfigurationAttribute.AITelemtryConfiguration == null)
                 {
                     _config = TelemetryConfiguration.CreateDefault();
                 }
-
+                else
+                {
+                    _config = aiTracerConfigurationAttribute.AITelemtryConfiguration;
+                }
+                
                 _config.InstrumentationKey = aiTracerConfigurationAttribute.InstrumentationKey;
             }
 

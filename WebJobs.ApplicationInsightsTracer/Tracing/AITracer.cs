@@ -13,14 +13,29 @@
     /// </summary>
     public class AITracer : ITelemetryClient, ITracer, ITelemetryOperationHandler, IDisposable
     {
-
+        /// <summary>
+        /// The internal Application Insights telemetry client
+        /// </summary>
         private readonly TelemetryClient _telemetryClient;
 
+        /// <summary>
+        /// A list of additional implementations of <see cref="ITracer"/> which will get the traces
+        /// </summary>
         private IList<ITracer> _additionalTracers;
 
+        /// <summary>
+        /// Custom properties that will be added to all events sent to Application Insights
+        /// </summary>
         private readonly IDictionary<string, string> _customProperties;
+
+        /// <summary>
+        /// Custom measurements that will be added to the operation request telemetry
+        /// </summary>
         private readonly IDictionary<string, double> _operationCustomMeasurements;
 
+        /// <summary>
+        /// The internal operation handler (is not null only when an operation starts using the StartOperation method)
+        /// </summary>
         private IOperationHolder<RequestTelemetry> _operationHolder;
 
         /// <summary>
@@ -29,7 +44,7 @@
         public const int ExceptionMessageMaxLength = 1024;
 
         /// <summary>
-        /// Initialized a new instance of the <see cref="AITracer"/> class.
+        /// Initializes a new instance of the <see cref="AITracer"/> class.
         /// </summary>
         /// <param name="telemetryConfiguration">an implementation of the <see cref="TelemetryConfiguration"/></param>
         /// <param name="sessionId">Session id used for tracing</param>
@@ -48,8 +63,6 @@
 
             _customProperties = new Dictionary<string, string>();
             _operationCustomMeasurements = new Dictionary<string, double>();
-
-
         }
 
         /// <summary>
