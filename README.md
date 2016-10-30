@@ -11,6 +11,15 @@ public void SimpleAITracerBinding([WebHookTrigger] Message m, AITracer aiTracer)
 
 See here for more info about [Azure WebJobs SDK Extensions](https://github.com/Azure/azure-webjobs-sdk-extensions).
 
+## Installation
+
+You can obtain it [through Nuget](https://www.nuget.org/packages/WebJobs.ApplicationInsightsTracer/) with:
+```
+Install-Package WebJobs.ApplicationInsightsTracer
+```
+
+Or **clone** this repo and reference it.
+
 ## Usage
 
 The Application Insights binding returns a `AITracer` object implements an interface for sending tracers and telemetry messages to Application Insights endpoint.
