@@ -178,6 +178,8 @@
             }
 
             _operationHolder.Dispose();
+
+            _operationHolder = null;
         }
 
         public void AddOperationCustomMeasurement(string key, double value)
@@ -277,7 +279,10 @@
 
         public void Dispose()
         {
-            this.DispatchOperation();
+            if (_operationHolder != null)
+            {
+                this.DispatchOperation();
+            }
         }
 
         #endregion

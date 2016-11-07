@@ -10,11 +10,17 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-      Version 0.0.2 changes:
-      - Added operation handling
+Version 0.0.4 changes:
+- Fixed Dispose failure on null reference pointer
+      
+Version 0.0.3 changes:
+- Added TelemetryClient as a parameter in the AITracerConfiguration attribute
+      
+Version 0.0.2 changes:
+- Added operation handling
 
-      Version 0.0.1 changes:
-      - Initial release
+Version 0.0.1 changes:
+- Initial release
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>WebJobSDK ApplicationInsights</tags>
