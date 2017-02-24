@@ -6,18 +6,18 @@
 
     public class AITracerValueProvider : IValueProvider
     {
-        private readonly AITracer _aiTracer;
+        private readonly AIWebJobTracer _aiWebjobTracer;
         private readonly string _instrumentationKey;
 
-        public AITracerValueProvider(AITracer aiTracer, string instrumentationKey)
+        public AITracerValueProvider(AIWebJobTracer aiWebjobTracer, string instrumentationKey)
         {
-            _aiTracer = aiTracer;
+            _aiWebjobTracer = aiWebjobTracer;
             _instrumentationKey = instrumentationKey;
         }
 
         public object GetValue()
         {
-            return _aiTracer;
+            return _aiWebjobTracer;
         }
 
         public string ToInvokeString()
@@ -25,6 +25,6 @@
             return _instrumentationKey;
         }
 
-        public Type Type => typeof (AITracer);
+        public Type Type => typeof (AIWebJobTracer);
     }
 }

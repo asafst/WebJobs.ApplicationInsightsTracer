@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using global::ApplicationInsightsTracer;
     using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.Azure.WebJobs.Host.Bindings;
     using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -30,9 +31,9 @@
                 throw new ArgumentNullException("context");
             }
 
-            AITracer aiTracer = value as AITracer;
+            AIWebJobTracer aiWebjobTracer = value as AIWebJobTracer;
 
-            return this.BindInternalAsync(aiTracer);
+            return this.BindInternalAsync(aiWebjobTracer);
         }
 
         public Task<IValueProvider> BindAsync(BindingContext context)
@@ -45,15 +46,17 @@
             return this.BindInternalAsync();
         }
 
-        private Task<IValueProvider> BindInternalAsync(AITracer aiTracer = null)
+        private Task<IValueProvider> BindInternalAsync(AIWebJobTracer aiWebjobTracer = null)
         {
-            if (aiTracer == null)
+            if (aiWebjobTracer == null)
             {
                 // use the to list to create a copy of the internal list
-                aiTracer = new AITracer(_config, additionalTracers: _additionalTracers.ToList());
+                aiWebjobTracer =
+                    (AIWebJobTracer)
+                    AITracerFactory.CreateAggregatedTracer(_config, additionalTracers: _additionalTracers.ToList());
             }
 
-            return Task.FromResult<IValueProvider>(new AITracerValueProvider(aiTracer, _config.InstrumentationKey));
+            return Task.FromResult<IValueProvider>(new AITracerValueProvider(aiWebjobTracer, _config.InstrumentationKey));
         }
 
         public ParameterDescriptor ToParameterDescriptor()

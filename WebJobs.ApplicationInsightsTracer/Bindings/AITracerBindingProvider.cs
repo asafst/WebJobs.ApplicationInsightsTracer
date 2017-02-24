@@ -7,6 +7,8 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using Config;
+    using global::ApplicationInsightsTracer;
+    using global::ApplicationInsightsTracer.Exceptions;
     using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.Azure.WebJobs.Host;
     using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -32,7 +34,7 @@
             }
 
             ParameterInfo parameter = context.Parameter;
-            if (context.Parameter.ParameterType != typeof(AITracer))
+            if (parameter.ParameterType != typeof(AIWebJobTracer))
             {
                 return Task.FromResult<IBinding>(null);
             }
@@ -41,16 +43,20 @@
             AITracerConfigurationAttribute aiTracerConfigurationAttribute = parameter.GetCustomAttribute<AITracerConfigurationAttribute>(inherit: false);
             if (aiTracerConfigurationAttribute != null)
             {
-                if (aiTracerConfigurationAttribute.AITelemtryConfiguration == null)
+                if (aiTracerConfigurationAttribute.AITelemtryConfiguration == null &&
+                    string.IsNullOrEmpty(aiTracerConfigurationAttribute.InstrumentationKey))
                 {
-                    _config = TelemetryConfiguration.CreateDefault();
+                    throw new AITracerConfigurationAttributeException("At least one of the configuration properties in the attribute must be set");
                 }
-                else
+
+                if (aiTracerConfigurationAttribute.AITelemtryConfiguration != null &&
+                    !string.IsNullOrEmpty(aiTracerConfigurationAttribute.InstrumentationKey))
                 {
-                    _config = aiTracerConfigurationAttribute.AITelemtryConfiguration;
+                    throw new AITracerConfigurationAttributeException("When telemetry configuration is provided thourgh the attribute, instrumentation key must be null");
                 }
-                
-                _config.InstrumentationKey = aiTracerConfigurationAttribute.InstrumentationKey;
+
+                _config = aiTracerConfigurationAttribute.AITelemtryConfiguration ??
+                          AITracerFactory.CreateDefaultTelemetryConfiguration(aiTracerConfigurationAttribute.InstrumentationKey);
             }
 
             return Task.FromResult<IBinding>(new AITracerBinding(_config, context.Parameter, new TraceWriterTracer(_writer)));

@@ -14,12 +14,13 @@
             JobHostConfiguration config = new JobHostConfiguration();
 
             // Use the AI Tracer extension with default configuration
-            // The Instrumentation key can be also taken from the app settings
-            config.UseAITracer("<IKEY_HERE>");
+            // The Instrumentation key will be taken from the app settings, can also be passed as a parameter
+            config.UseApplicationInsightsTracer();
 
-            var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
-            telemetryConfiguration.InstrumentationKey = "<IKEY_HERE>";
-            config.UseAITracer(telemetryConfiguration);
+            // additional method to pass the telemetry configuration to the extension
+            //var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
+            //telemetryConfiguration.InstrumentationKey = "<IKEY_HERE>";
+            //config.UseApplicationInsightsTracer(telemetryConfiguration);
 
 
             // Use the timer trigger jobs for the example
@@ -32,7 +33,7 @@
         /// <summary>
         /// A sample function for some AITracer samples (trace, exceptions, operations)
         /// </summary>
-        public static void AITracerSampleJob([TimerTrigger("00:00:05")] TimerInfo timer, AITracer aiTracer)
+        public static void AITracerSampleJob([TimerTrigger("00:00:05")] TimerInfo timer, AIWebJobTracer aiTracer)
         {
             // Create a request operation to wrap all the current trigger telemetry under a single group (i.e. Operation)
             aiTracer.StartOperation("Test Operation");
@@ -64,10 +65,8 @@
         /// <summary>
         /// A sample function for using the AITracerConfiguration Attribute for setting the telemetry configuration for each invocation
         /// </summary>
-        /// <param name="timer"></param>
-        /// <param name="aiTracer"></param>
         public static void AITracerAttributeSampleJob([TimerTrigger("00:00:05")] TimerInfo timer, 
-            [AITracerConfiguration(InstrumentationKey = "<IKEY_HERE>")] AITracer aiTracer)
+            [AITracerConfiguration(InstrumentationKey = "<IKEY_HERE>")] AIWebJobTracer aiTracer)
         {
             // Simple trace
             aiTracer.TraceInformation("Function started!");

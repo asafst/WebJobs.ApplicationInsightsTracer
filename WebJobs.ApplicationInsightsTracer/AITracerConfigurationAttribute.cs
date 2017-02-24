@@ -2,11 +2,12 @@
 {
     using Microsoft.ApplicationInsights.Extensibility;
     using System;
-    using Tracing;
+    using WebJobs.ApplicationInsightsTracer.Tracing;
 
     /// <summary>
-    /// Attribute used to set the <see cref="AITracer"/> configuration for a specific function trigger.
-    /// The target parameter must be of type <see cref="AITracer"/>
+    /// Attribute used to set the <see cref="AIWebJobTracer"/> configuration for a specific function trigger.
+    /// The target parameter must be of type <see cref="AIWebJobTracer"/>
+    /// <remarks>If the <param name="AITelemtryConfiguration"/> is set, the <param name="InstrumentationKey"/> must be null</remarks>
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
     public class AITracerConfigurationAttribute : Attribute

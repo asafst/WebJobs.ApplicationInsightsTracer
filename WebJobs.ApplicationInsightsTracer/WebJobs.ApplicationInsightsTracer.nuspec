@@ -2,14 +2,17 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <version>0.1.0</version>
+    <title>Azure Webjobs SDK Application Insights Tracer Extensions</title>
+    <authors>asafst@microsoft.com</authors>
+    <owners>asafst@microsoft.com</owners>
     <projectUrl>https://github.com/asafst/WebJobs.ApplicationInsightsTracer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
+    <description>An Application Insights tracer extension for the WebJob SDK</description>
     <releaseNotes>
+Version 0.1.0 changes:
+- Using the external ApplicationInsightsTracer nuget
+
 Version 0.0.4 changes:
 - Fixed Dispose failure on null reference pointer
       
@@ -22,7 +25,12 @@ Version 0.0.2 changes:
 Version 0.0.1 changes:
 - Initial release
     </releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>WebJobSDK ApplicationInsights</tags>
   </metadata>
+  <dependencies>
+    <dependency id="ApplicationInsightsTracer" version="0.1.0" />
+    <dependency id="Microsoft.Azure.WebJobs" version="1.1.2" />
+    <dependency id="Microsoft.Azure.WebJobs.Extensions" version="1.0.1" />
+  </dependencies>
 </package>

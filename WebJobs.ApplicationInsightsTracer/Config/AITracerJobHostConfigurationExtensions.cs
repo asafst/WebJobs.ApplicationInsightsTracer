@@ -3,6 +3,7 @@
     using System;
     using System.Runtime.CompilerServices;
     using Bindings;
+    using global::ApplicationInsightsTracer;
     using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Host.Config;
@@ -11,17 +12,17 @@
     public static class AITracerJobHostConfigurationExtensions
     {
 
-        public static void UseAITracer(this JobHostConfiguration config)
+        public static void UseApplicationInsightsTracer(this JobHostConfiguration config)
         {
-            UseAITracer(config, AITracer.CreateDefaultTelemetryConfiguration());
+            UseApplicationInsightsTracer(config, AITracerFactory.GetActiveTelemetryConfiguration());
         }
 
-        public static void UseAITracer(this JobHostConfiguration config, string instrumentationKey)
+        public static void UseApplicationInsightsTracer(this JobHostConfiguration config, string instrumentationKey)
         {
-            UseAITracer(config, AITracer.CreateDefaultTelemetryConfiguration(instrumentationKey));
+            UseApplicationInsightsTracer(config, AITracerFactory.GetActiveTelemetryConfiguration(instrumentationKey));
         }
 
-        public static void UseAITracer(this JobHostConfiguration config, TelemetryConfiguration telemetryConfiguration)
+        public static void UseApplicationInsightsTracer(this JobHostConfiguration config, TelemetryConfiguration telemetryConfiguration)
         {
             if (config == null)
             {
