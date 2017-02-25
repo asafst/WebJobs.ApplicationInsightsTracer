@@ -4,7 +4,6 @@
     using Microsoft.Azure.WebJobs;
     using WebJobs.ApplicationInsightsTracer.Config;
     using WebJobs.ApplicationInsightsTracer.Tracing;
-    using Microsoft.ApplicationInsights.Extensibility;
     using WebJobs.ApplicationInsightsTracer;
 
     public class Program
@@ -31,7 +30,7 @@
         }
 
         /// <summary>
-        /// A sample function for some AITracer samples (trace, exceptions, operations)
+        /// A sample function for some AITracer events (trace, exceptions, operations)
         /// </summary>
         public static void AITracerSampleJob([TimerTrigger("00:00:05")] TimerInfo timer, AIWebJobTracer aiTracer)
         {

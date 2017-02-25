@@ -14,7 +14,7 @@
     public class AITracerBinding : IBinding
     {
         private readonly ParameterInfo _parameter;
-        private readonly IList<ITracer> _additionalTracers;
+        private readonly List<ITracer> _additionalTracers;
         private readonly TelemetryConfiguration _config;
 
         public AITracerBinding(TelemetryConfiguration config, ParameterInfo parameter, ITracer webJobTracer)
@@ -51,9 +51,8 @@
             if (aiWebjobTracer == null)
             {
                 // use the to list to create a copy of the internal list
-                aiWebjobTracer =
-                    (AIWebJobTracer)
-                    AITracerFactory.CreateAggregatedTracer(_config, additionalTracers: _additionalTracers.ToList());
+                var aiTracer = AITracerFactory.CreateAITracer(_config);
+                aiWebjobTracer = new AIWebJobTracer(aiTracer, _additionalTracers);
             }
 
             return Task.FromResult<IValueProvider>(new AITracerValueProvider(aiWebjobTracer, _config.InstrumentationKey));
