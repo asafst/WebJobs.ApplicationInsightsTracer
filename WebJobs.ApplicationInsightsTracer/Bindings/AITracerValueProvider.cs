@@ -1,6 +1,7 @@
 ﻿namespace WebJobs.ApplicationInsightsTracer.Bindings
 {
     using System;
+    using System.Threading.Tasks;
     using Microsoft.Azure.WebJobs.Host.Bindings;
     using Tracing;
 
@@ -18,6 +19,11 @@
         public object GetValue()
         {
             return _aiWebjobTracer;
+        }
+
+        public Task<object> GetValueAsync()
+        {
+            return Task.FromResult(GetValue());
         }
 
         public string ToInvokeString()
